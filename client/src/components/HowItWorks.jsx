@@ -51,28 +51,27 @@ function StepCard({ s, index }) {
   return (
     <div
       ref={ref}
-      className={`card card-hover rounded-2xl overflow-hidden flex flex-col group cursor-default
+      className={`card card-hover rounded-2xl overflow-hidden flex flex-row group cursor-default
         ${inView ? 'anim-fade-up' : 'opacity-0'}`}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Phone mockup screenshot */}
-      <div className="relative bg-gray-100 dark:bg-[#0d1a2e] overflow-hidden"
-        style={{ aspectRatio: '9/16', maxHeight: '340px' }}>
+      {/* Left — full screenshot */}
+      <div className="relative w-[42%] shrink-0 bg-gray-100 dark:bg-[#0d1a2e] overflow-hidden">
         <img
           src={s.img}
           alt={s.title}
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Step badge overlay */}
+        {/* Step badge */}
         <div className="absolute top-3 left-3">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white text-xs font-black shadow-lg">
+          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-white text-[11px] font-black shadow-lg">
             {s.step}
           </span>
         </div>
       </div>
 
-      {/* Info */}
-      <div className="p-5 flex flex-col flex-1">
+      {/* Right — description */}
+      <div className="flex-1 p-5 flex flex-col justify-center">
         <h3 className="text-sm font-black text-gray-900 dark:text-white mb-2 leading-snug">
           {s.title}
         </h3>
@@ -104,8 +103,8 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Cards — 2 columns, each card is image left + description right */}
+        <div className="grid md:grid-cols-2 gap-4">
           {steps.map((s, i) => <StepCard key={i} s={s} index={i} />)}
         </div>
 
