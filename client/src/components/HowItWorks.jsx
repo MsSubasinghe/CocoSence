@@ -46,36 +46,47 @@ const steps = [
   },
 ]
 
-function StepCard({ s, index }) {
+function StepRow({ s, index }) {
   const [ref, inView] = useInView()
+  const isEven = index % 2 === 0
+
   return (
     <div
       ref={ref}
-      className={`card card-hover rounded-2xl overflow-hidden flex flex-row group cursor-default
-        ${inView ? 'anim-fade-up' : 'opacity-0'}`}
-      style={{ animationDelay: `${index * 100}ms` }}
+      className={`flex flex-col md:flex-row items-center gap-8 md:gap-14
+        ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}
+        ${inView ? (isEven ? 'anim-slide-l' : 'anim-slide-r') : 'opacity-0'}`}
+      style={{ animationDelay: `${index * 120}ms` }}
     >
-      {/* Left — full screenshot */}
-      <div className="relative w-[42%] shrink-0 bg-gray-100 dark:bg-[#0d1a2e] overflow-hidden">
-        <img
-          src={s.img}
-          alt={s.title}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-        />
-        {/* Step badge */}
-        <div className="absolute top-3 left-3">
-          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-white text-[11px] font-black shadow-lg">
-            {s.step}
-          </span>
+      {/* Screenshot — phone frame */}
+      <div className="w-full md:w-[280px] shrink-0 group">
+        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl ring-4 ring-gray-200 dark:ring-white/10 bg-black mx-auto"
+          style={{ maxWidth: '260px' }}>
+          {/* Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-b-xl z-10" />
+          <img
+            src={s.img}
+            alt={s.title}
+            className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{ aspectRatio: '9/19' }}
+          />
         </div>
       </div>
 
-      {/* Right — description */}
-      <div className="flex-1 p-5 flex flex-col justify-center">
-        <h3 className="text-sm font-black text-gray-900 dark:text-white mb-2 leading-snug">
+      {/* Description */}
+      <div className="flex-1 text-center md:text-left">
+        <div className="inline-flex items-center gap-2.5 mb-4">
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-green-500 text-white text-xs font-black shadow-md">
+            {s.step}
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-green-600 dark:text-green-400">
+            Step {s.step}
+          </span>
+        </div>
+        <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-3 leading-tight">
           {s.title}
         </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm mx-auto md:mx-0">
           {s.desc}
         </p>
       </div>
@@ -88,10 +99,10 @@ export default function HowItWorks() {
 
   return (
     <section className="py-20 px-6 bg-[#f4f7f4] dark:bg-[#080f1e]">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
 
         {/* Heading */}
-        <div ref={headRef} className={`text-center mb-12 ${headInView ? 'anim-fade-up' : 'opacity-0'}`}>
+        <div ref={headRef} className={`text-center mb-16 ${headInView ? 'anim-fade-up' : 'opacity-0'}`}>
           <span className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-xs font-semibold uppercase tracking-widest mb-3">
             Mobile App
           </span>
@@ -103,9 +114,9 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        {/* Cards — 2 columns, each card is image left + description right */}
-        <div className="grid md:grid-cols-2 gap-4">
-          {steps.map((s, i) => <StepCard key={i} s={s} index={i} />)}
+        {/* Zig-zag rows */}
+        <div className="flex flex-col gap-16 md:gap-20">
+          {steps.map((s, i) => <StepRow key={i} s={s} index={i} />)}
         </div>
 
       </div>
