@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Remove-Item *)",
+      "PowerShell(npm install *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(npm uninstall *)",
+      "PowerShell(Start-Process \"http://localhost:5173\")",
+      "PowerShell(node -e \"const l = require\\('C:/Users/USER/Documents/CocoSense/client/node_modules/lucide-react'\\); const icons = Object.keys\\(l\\).filter\\(k => k !== 'default'\\); console.log\\('Total:', icons.length\\); console.log\\(icons.slice\\(0,50\\).join\\(', '\\)\\)\" 2>&1 | Select-Object -First 10)",
+      "PowerShell(node -e \"const l = require\\('C:/Users/USER/Documents/CocoSense/client/node_modules/lucide-react'\\); const icons = Object.keys\\(l\\); const social = icons.filter\\(k => k.match\\(/^\\(Linked|Github|Twitter|Instagram|Facebook|Link\\)/i\\) && !k.endsWith\\('Icon'\\)\\); console.log\\(social.join\\(', '\\)\\)\")",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(Start-Process \"http://localhost:5173/documents\")",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\\\\client\\\\src\\\\assets\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object Name, FullName)"
+    ]
+  }
+}
