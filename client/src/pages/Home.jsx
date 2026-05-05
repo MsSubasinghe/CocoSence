@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import ImageSlider from '../components/ImageSlider'
 import HeroSection from '../components/HeroSection'
+import HowItWorks from '../components/HowItWorks'
 import { ShieldCheck, BarChart2, Bug, Leaf, ChevronRight, ArrowRight, Video } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
@@ -155,6 +156,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* How It Works */}
+      <HowItWorks />
 
       {/* Gallery */}
       <ImageSlider />
