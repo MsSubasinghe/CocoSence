@@ -16,8 +16,10 @@ const DOCUMENTS = [
   { id: 11, name: 'Letter from Supervisor',                      filename: 'LetterFromSupervisor.pdf',                                                                                                    size: '0.2 MB',  date: 'Mar 2026', tag: 'Letter',       previewable: true  },
   { id: 12, name: 'Sri Lanka Institute of Information Technology', filename: 'Sri Lanka Institute of Information Technology.pdf',                                                                          size: '0.6 MB',  date: 'Aug 2025', tag: 'Admin',        previewable: true  },
   { id: 13, name: 'TAF 25-26J-384',                              filename: 'TAF_25-26J-384.pdf',                                                                                                          size: '0.4 MB',  date: 'Aug 2025', tag: 'Admin',        previewable: true  },
-  { id: 14, name: 'Coconut Health Monitor Final Report',         filename: 'Coconut_Health_Monitor_Final_v4.pdf',                                                                                           size: '2.1 MB',  date: 'Apr 2026', tag: 'Paper',        previewable: true  },
+  { id: 14, name: 'Coconut Health Monitor Final Report',         filename: 'Coconut_Health_Monitor_Final_v4.pdf',                                                                                          size: '2.1 MB',  date: 'Apr 2026', tag: 'Paper',        previewable: true  },
   { id: 15, name: 'Ravindu Final Report (with Images)',          filename: 'Ravindu_Final_Report_WITH_IMAGES_v4.pdf',                                                                                       size: '3.4 MB',  date: 'Apr 2026', tag: 'Paper',        previewable: true  },
+  { id: 16, name: 'CRI – Letter of Recommendation',             filename: null, size: '—', date: 'May 2026', tag: 'Certificate', previewable: true,
+    images: ['/certificates/cri_letter_p1.jpg', '/certificates/cri_letter_p2.jpg'] },
 ]
 
 const tagLight = {
@@ -30,6 +32,7 @@ const tagLight = {
   Report:       'bg-indigo-50  text-indigo-600  border-indigo-100',
   Letter:       'bg-yellow-50  text-yellow-600  border-yellow-100',
   Admin:        'bg-gray-50    text-gray-600    border-gray-200',
+  Certificate:  'bg-amber-50   text-amber-600   border-amber-100',
 }
 const tagDark = {
   Proposal:     'dark:bg-blue-500/10    dark:text-blue-400    dark:border-blue-500/20',
@@ -41,45 +44,66 @@ const tagDark = {
   Report:       'dark:bg-indigo-500/10  dark:text-indigo-400  dark:border-indigo-500/20',
   Letter:       'dark:bg-yellow-500/10  dark:text-yellow-400  dark:border-yellow-500/20',
   Admin:        'dark:bg-gray-500/10    dark:text-gray-400    dark:border-gray-500/20',
+  Certificate:  'dark:bg-amber-500/10   dark:text-amber-400   dark:border-amber-500/20',
 }
 
 function DocCard({ doc, index, onPreview }) {
   const [ref, inView] = useInView()
+  const isImageDoc = !!doc.images
   return (
     <div ref={ref}
-      className={`card card-hover rounded-2xl p-6 ${inView ? 'anim-fade-up' : 'opacity-0'}`}
+      className={`card card-hover rounded-2xl overflow-hidden ${inView ? 'anim-fade-up' : 'opacity-0'}`}
       style={{ animationDelay: `${index * 100}ms` }}>
-      <div className="flex items-start gap-4 mb-5">
-        <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 flex items-center justify-center shrink-0">
-          <FileText size={22} className="text-red-400" />
+      {isImageDoc && (
+        <div className="relative h-44 overflow-hidden bg-gray-100 dark:bg-white/5 cursor-pointer" onClick={() => onPreview(doc)}>
+          <img src={doc.images[0]} alt={doc.name}
+            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
+          <span className="absolute bottom-2 right-2 text-xs text-white bg-black/50 rounded px-2 py-0.5">{doc.images.length} pages</span>
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-gray-800 dark:text-gray-100 font-semibold text-sm leading-snug mb-2">{doc.name}</h3>
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-gray-400 dark:text-gray-500">{doc.size}</span>
-            <span className="text-gray-200 dark:text-gray-700">·</span>
-            <span className="text-xs text-gray-400 dark:text-gray-500">{doc.date}</span>
-            <span className={`px-2 py-0.5 rounded-full border text-xs font-medium ${tagLight[doc.tag]} ${tagDark[doc.tag]}`}>
-              {doc.tag}
-            </span>
+      )}
+      <div className="p-6">
+        <div className="flex items-start gap-4 mb-5">
+          {!isImageDoc && (
+            <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 flex items-center justify-center shrink-0">
+              <FileText size={22} className="text-red-400" />
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+            <h3 className="text-gray-800 dark:text-gray-100 font-semibold text-sm leading-snug mb-2">{doc.name}</h3>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs text-gray-400 dark:text-gray-500">{doc.size}</span>
+              <span className="text-gray-200 dark:text-gray-700">·</span>
+              <span className="text-xs text-gray-400 dark:text-gray-500">{doc.date}</span>
+              <span className={`px-2 py-0.5 rounded-full border text-xs font-medium ${tagLight[doc.tag]} ${tagDark[doc.tag]}`}>
+                {doc.tag}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex gap-3">
-        {doc.previewable ? (
-          <button onClick={() => onPreview(doc)}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 border border-gray-200 dark:border-white/10 hover:border-green-200 dark:hover:border-green-500/30 text-gray-500 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 text-xs font-medium transition-all duration-300">
-            <Eye size={14} />Preview
-          </button>
-        ) : (
-          <span className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-300 dark:text-gray-600 text-xs font-medium cursor-not-allowed select-none">
-            <Eye size={14} />No Preview
-          </span>
-        )}
-        <a href={`/documents/${encodeURIComponent(doc.filename)}`} download={doc.name}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-green-50 dark:bg-green-500/10 hover:bg-green-100 dark:hover:bg-green-500/15 border border-green-200 dark:border-green-500/25 text-green-700 dark:text-green-400 text-xs font-medium transition-all duration-300">
-          <Download size={14} />Download
-        </a>
+        <div className="flex gap-3">
+          {doc.previewable ? (
+            <button onClick={() => onPreview(doc)}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 border border-gray-200 dark:border-white/10 hover:border-green-200 dark:hover:border-green-500/30 text-gray-500 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 text-xs font-medium transition-all duration-300">
+              <Eye size={14} />Preview
+            </button>
+          ) : (
+            <span className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-300 dark:text-gray-600 text-xs font-medium cursor-not-allowed select-none">
+              <Eye size={14} />No Preview
+            </span>
+          )}
+          {doc.filename ? (
+            <a href={`/documents/${encodeURIComponent(doc.filename)}`} download={doc.name}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-green-50 dark:bg-green-500/10 hover:bg-green-100 dark:hover:bg-green-500/15 border border-green-200 dark:border-green-500/25 text-green-700 dark:text-green-400 text-xs font-medium transition-all duration-300">
+              <Download size={14} />Download
+            </a>
+          ) : (
+            <a href={doc.images[0]} download={doc.name}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-green-50 dark:bg-green-500/10 hover:bg-green-100 dark:hover:bg-green-500/15 border border-green-200 dark:border-green-500/25 text-green-700 dark:text-green-400 text-xs font-medium transition-all duration-300">
+              <Download size={14} />Download
+            </a>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -93,8 +117,12 @@ export default function Documents() {
   const [searchRef, searchInView] = useInView()
 
   const filtered   = DOCUMENTS.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))
-  const openPreview  = (doc) => { setPreviewUrl(`/documents/${encodeURIComponent(doc.filename)}`); setPreviewName(doc.name) }
-  const closePreview = ()    => { setPreviewUrl(null); setPreviewName('') }
+  const [previewImages, setPreviewImages] = useState(null)
+  const openPreview  = (doc) => {
+    if (doc.images) { setPreviewImages(doc.images); setPreviewName(doc.name) }
+    else { setPreviewUrl(`/documents/${encodeURIComponent(doc.filename)}`); setPreviewName(doc.name) }
+  }
+  const closePreview = () => { setPreviewUrl(null); setPreviewName(''); setPreviewImages(null) }
 
   return (
     <main className="min-h-screen bg-[#f4f7f4] dark:bg-[#080f1e] pt-28 pb-24 px-6 transition-colors duration-300">
@@ -140,6 +168,26 @@ export default function Documents() {
               </button>
             </div>
             <iframe src={previewUrl} className="flex-1 w-full" title="PDF Preview" />
+          </div>
+        </div>
+      )}
+
+      {previewImages && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm anim-fade-in">
+          <div className="w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#162035] rounded-2xl border border-gray-200 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden anim-scale-in">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/8 shrink-0">
+              <span className="text-gray-800 dark:text-gray-100 font-semibold text-sm truncate max-w-md">{previewName}</span>
+              <button onClick={closePreview}
+                className="text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/8 rounded-lg p-1 transition-all">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="overflow-y-auto flex flex-col gap-4 p-4">
+              {previewImages.map((src, i) => (
+                <img key={i} src={src} alt={`${previewName} – page ${i + 1}`}
+                  className="w-full rounded-xl border border-gray-100 dark:border-white/10 shadow-sm" />
+              ))}
+            </div>
           </div>
         </div>
       )}
