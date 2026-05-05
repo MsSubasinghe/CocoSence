@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, Download, Eye, Search, X } from 'lucide-react'
+import { FileText, Download, Eye, Search, X, FileSpreadsheet, Presentation, AlignLeft } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import PdfThumbnail from '../components/PdfThumbnail'
 
@@ -51,7 +51,15 @@ const tagDark = {
 function DocCard({ doc, index, onPreview }) {
   const [ref, inView] = useInView()
   const isImageDoc = !!doc.images
-  const isPdf = doc.filename && doc.filename.endsWith('.pdf')
+  const ext = doc.filename ? doc.filename.split('.').pop().toLowerCase() : ''
+  const isPdf = ext === 'pdf'
+
+  const fileTypeMeta = {
+    pptx: { label: 'PPTX', Icon: Presentation,    bg: 'from-orange-500 to-red-500',    icon: 'text-white/80' },
+    xlsx: { label: 'XLSX', Icon: FileSpreadsheet,  bg: 'from-emerald-500 to-green-600', icon: 'text-white/80' },
+    txt:  { label: 'TXT',  Icon: AlignLeft,        bg: 'from-sky-500 to-blue-600',      icon: 'text-white/80' },
+  }
+  const meta = fileTypeMeta[ext]
 
   return (
     <div ref={ref}
@@ -69,9 +77,15 @@ function DocCard({ doc, index, onPreview }) {
           <div className="w-full h-full group-hover:scale-105 transition-transform duration-500">
             <PdfThumbnail url={`/documents/${encodeURIComponent(doc.filename)}`} alt={doc.name} />
           </div>
+        ) : meta ? (
+          <div className={`w-full h-full flex flex-col items-center justify-center bg-linear-to-br ${meta.bg} gap-3`}>
+            <meta.Icon size={44} className={meta.icon} strokeWidth={1.5} />
+            <span className="text-white font-bold text-lg tracking-widest opacity-90">{meta.label}</span>
+          </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <FileText size={40} className="text-gray-300 dark:text-gray-600" />
+          <div className="w-full h-full flex flex-col items-center justify-center bg-linear-to-br from-gray-400 to-gray-600 gap-3">
+            <FileText size={44} className="text-white/80" strokeWidth={1.5} />
+            <span className="text-white font-bold text-lg tracking-widest opacity-90">{ext.toUpperCase() || 'FILE'}</span>
           </div>
         )}
         <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
