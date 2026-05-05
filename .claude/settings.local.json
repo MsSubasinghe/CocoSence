@@ -11,7 +11,9 @@
       "PowerShell(Copy-Item *)",
       "PowerShell(Start-Process \"http://localhost:5173/documents\")",
       "PowerShell(Get-Item *)",
-      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\\\\client\\\\src\\\\assets\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object Name, FullName)"
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\\\\client\\\\src\\\\assets\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object Name, FullName)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
