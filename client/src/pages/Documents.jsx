@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FileText, Download, Eye, Search, X } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
+import PdfThumbnail from '../components/PdfThumbnail'
 
 const DOCUMENTS = [
   { id: 1,  name: 'Research Proposal Report (IT22186638)',        filename: 'IT22186638_Proposal_report_draft.pdf',                                                                                         size: '1.1 MB',  date: 'Aug 2025', tag: 'Proposal',     previewable: true  },
@@ -50,25 +51,37 @@ const tagDark = {
 function DocCard({ doc, index, onPreview }) {
   const [ref, inView] = useInView()
   const isImageDoc = !!doc.images
+  const isPdf = doc.filename && doc.filename.endsWith('.pdf')
+
   return (
     <div ref={ref}
       className={`card card-hover rounded-2xl overflow-hidden ${inView ? 'anim-fade-up' : 'opacity-0'}`}
       style={{ animationDelay: `${index * 100}ms` }}>
-      {isImageDoc && (
-        <div className="relative h-44 overflow-hidden bg-gray-100 dark:bg-white/5 cursor-pointer" onClick={() => onPreview(doc)}>
+
+      {/* Thumbnail */}
+      <div
+        className="relative h-44 overflow-hidden bg-gray-100 dark:bg-white/5 cursor-pointer group"
+        onClick={() => doc.previewable && onPreview(doc)}>
+        {isImageDoc ? (
           <img src={doc.images[0]} alt={doc.name}
-            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
-          <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+        ) : isPdf ? (
+          <div className="w-full h-full group-hover:scale-105 transition-transform duration-500">
+            <PdfThumbnail url={`/documents/${encodeURIComponent(doc.filename)}`} alt={doc.name} />
+          </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <FileText size={40} className="text-gray-300 dark:text-gray-600" />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
+        {isImageDoc && (
           <span className="absolute bottom-2 right-2 text-xs text-white bg-black/50 rounded px-2 py-0.5">{doc.images.length} pages</span>
-        </div>
-      )}
+        )}
+      </div>
+
       <div className="p-6">
         <div className="flex items-start gap-4 mb-5">
-          {!isImageDoc && (
-            <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 flex items-center justify-center shrink-0">
-              <FileText size={22} className="text-red-400" />
-            </div>
-          )}
           <div className="flex-1 min-w-0">
             <h3 className="text-gray-800 dark:text-gray-100 font-semibold text-sm leading-snug mb-2">{doc.name}</h3>
             <div className="flex items-center gap-2 flex-wrap">
