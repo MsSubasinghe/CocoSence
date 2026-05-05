@@ -2,9 +2,10 @@ import { useRef } from 'react'
 import ImageSlider from '../components/ImageSlider'
 import HeroSection from '../components/HeroSection'
 import HowItWorks from '../components/HowItWorks'
-import { ShieldCheck, BarChart2, Bug, Leaf, ChevronRight, ArrowRight, Video } from 'lucide-react'
+import { ShieldCheck, BarChart2, Bug, Leaf, ChevronRight, ArrowRight, Video, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
+import iotImage from '../assets/iot/iot.png'
 const droneVideo = '/videos/drone_video.mp4'
 
 const modules = [
@@ -66,6 +67,7 @@ function ImpactStat({ num, label, sub, index, last }) {
 export default function Home() {
   const [secRef,  secInView]  = useInView()
   const [modRef,  modInView]  = useInView()
+  const [iotRef,  iotInView]  = useInView()
   const [droneRef, droneInView] = useInView()
   const [ctaRef,  ctaInView]  = useInView()
   const videoRef = useRef(null)
@@ -159,6 +161,60 @@ export default function Home() {
 
       {/* How It Works */}
       <HowItWorks />
+
+      {/* IoT Device */}
+      <section className="py-20 px-6 bg-white dark:bg-[#0d1626]">
+        <div className="max-w-5xl mx-auto">
+          <div ref={iotRef} className="card rounded-2xl overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+
+              {/* Left — image */}
+              <div className={`md:w-[48%] shrink-0 bg-gray-50 dark:bg-[#0b1120] flex items-center justify-center min-h-[340px] p-8 ${iotInView ? 'anim-slide-l' : 'opacity-0'}`}
+                style={{ animationDelay: '200ms', animationDuration: '0.8s' }}>
+                <img src={iotImage} alt="CocoSense IoT Device"
+                  className="w-full max-w-xs object-contain drop-shadow-xl" />
+              </div>
+
+              {/* Right — description */}
+              <div className={`flex-1 p-8 flex flex-col justify-center ${iotInView ? 'anim-slide-r' : 'opacity-0'}`}
+                style={{ animationDelay: '400ms', animationDuration: '0.8s' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-green-50 dark:bg-green-500/10 border border-green-100 dark:border-green-500/20 flex items-center justify-center">
+                    <Cpu size={16} className="text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-xs font-semibold uppercase tracking-wider">
+                    IoT Hardware
+                  </span>
+                </div>
+                <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3 leading-snug">
+                  Smart IoT Device for<br />
+                  <span className="text-gradient">Real-Time Tree Monitoring</span>
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5">
+                  Our custom-built IoT device is deployed directly in coconut plantations to continuously
+                  monitor individual trees. It captures environmental and sensor data in real time and
+                  transmits it to the CocoSense platform for instant AI-powered analysis.
+                </p>
+                <ul className="space-y-2.5">
+                  {[
+                    'Continuous per-tree health monitoring without manual inspection',
+                    'Wireless data transmission to the CocoSense cloud platform',
+                    'Integrated with drone data for multi-source analysis',
+                    'Low power consumption — suitable for large-scale deployment',
+                    'Real-time alerts for early disease & stress detection',
+                  ].map((point, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 dark:bg-green-500 shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Gallery */}
       <ImageSlider />

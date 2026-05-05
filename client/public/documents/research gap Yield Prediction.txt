@@ -1,0 +1,15 @@
+Precision Soil Moisture Estimation with Drone-Based Imaging - 
+
+Gap : Although focusing on hyperspectral, this study highlights how drone imagery plus machine learning estimates soil moisture at different depths. No electrochemical NPK data combined.
+
+https://www.mdpi.com/3157726
+
+
+
+
+
+CNN–LSTM framework to automatically detect anomalies in farmland using aerial images from UAVs
+
+Uses CNN + LSTM on UAV RGB imagery for anomaly detection (weed, water logging, nutrient deficiency)
+
+Gap: No integration of electrochemical sensor (nutrient) data alongside imagery.

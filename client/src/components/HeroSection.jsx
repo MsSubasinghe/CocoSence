@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Smartphone } from 'lucide-react'
 const heroVideo = '/videos/hero_video.mp4'
 
 const stats = [
@@ -121,6 +121,12 @@ export default function HeroSection() {
             className="inline-flex items-center justify-center px-7 py-3.5 bg-white/6 hover:bg-white/10 border border-white/12 hover:border-white/25 text-white font-medium rounded-xl text-sm transition-all duration-300">
             View Documents
           </Link>
+          <a href="https://drive.google.com/uc?export=download&id=1B07ynsHw-yYIK1rJFvEXzcL27MfzKVkW"
+            target="_blank" rel="noopener noreferrer"
+            className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white/6 hover:bg-green-500/20 border border-white/12 hover:border-green-500/40 text-white font-medium rounded-xl text-sm transition-all duration-300">
+            <Smartphone size={15} className="text-green-400" />
+            Download App
+          </a>
         </div>
 
         {/* Stats */}
