@@ -12,15 +12,17 @@ export default async function handler(req, res) {
   if (!name || !email || !subject || !message)
     return res.status(400).json({ error: 'All fields are required.' })
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  })
-
   try {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
+
     await transporter.sendMail({
       from:    `"CocoSense Contact" <${process.env.GMAIL_USER}>`,
       to:      process.env.RECIPIENT_EMAIL,
@@ -45,9 +47,10 @@ export default async function handler(req, res) {
         </div>
       `,
     })
+
     res.json({ success: true })
   } catch (err) {
     console.error('Mail error:', err.message)
-    res.status(500).json({ error: 'Failed to send email.' })
+    res.status(500).json({ error: err.message })
   }
 }
