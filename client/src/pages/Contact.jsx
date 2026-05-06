@@ -2,7 +2,9 @@ import { useState, useRef } from 'react'
 import { Mail, MapPin, Phone, Send, CheckCircle, AlertCircle } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
-const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/contact`
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:3001/api/contact'
+  : '/api/contact'
 
 const contactInfo = [
   {
