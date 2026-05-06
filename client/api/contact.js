@@ -1,4 +1,6 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -13,21 +15,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'All fields are required.' })
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    })
-
-    await transporter.sendMail({
-      from:    `"CocoSense Contact" <${process.env.GMAIL_USER}>`,
-      to:      process.env.RECIPIENT_EMAIL,
-      replyTo: email,
-      subject: `CocoSense Contact: ${subject}`,
+    await resend.emails.send({
+      from:     'CocoSense Contact <onboarding@resend.dev>',
+      to:       process.env.RECIPIENT_EMAIL,
+      replyTo:  email,
+      subject:  `CocoSense Contact: ${subject}`,
       html: `
         <div style="font-family:sans-serif;max-width:560px;margin:auto;padding:32px;border:1px solid #e5e7eb;border-radius:12px;">
           <h2 style="color:#16a34a;margin-top:0;">New Contact Message</h2>
