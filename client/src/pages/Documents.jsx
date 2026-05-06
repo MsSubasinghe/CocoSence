@@ -21,6 +21,7 @@ const DOCUMENTS = [
   { id: 15, name: 'Ravindu Final Report (with Images)',          filename: 'Ravindu_Final_Report_WITH_IMAGES_v4.pdf',                                                                                       size: '3.4 MB',  date: 'Apr 2026', tag: 'Paper',        previewable: true  },
   { id: 16, name: 'CRI – Letter of Recommendation',             filename: null, size: '—', date: 'May 2026', tag: 'Certificate', previewable: true,
     images: ['/certificates/cri_letter_p1.jpg', '/certificates/cri_letter_p2.jpg'] },
+  { id: 17, name: 'Final Research Paper – CI4068 Submission',  filename: 'CI4068_Final_Paper_CocoSense_AI_Powered_Drone_Based_System_for_Comprehensive_Coconut_Tree_Health_Monitoring_and_Yield_Prediction.pdf', size: '0.4 MB', date: 'May 2026', tag: 'Paper', previewable: true },
 ]
 
 const tagLight = {

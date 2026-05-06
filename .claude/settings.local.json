@@ -13,7 +13,29 @@
       "PowerShell(Get-Item *)",
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\\\\client\\\\src\\\\assets\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object Name, FullName)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" remote -v)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" status --short)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" log --oneline -5)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" add client/src/components/HeroSection.jsx client/src/pages/Documents.jsx client/src/pages/Home.jsx \"client/public/documents/\" \"client/src/assets/images/app_screenShots/\" \"client/src/assets/iot/\")",
+      "Bash(git -C 'c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense' commit -m ' *)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" push -u origin main)",
+      "Bash(gh auth *)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" remote set-url origin \"https://MsSubasinghe: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@github.com/MsSubasinghe/CocoSense.git\")",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" remote set-url origin \"https://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@github.com/MsSubasinghe/CocoSense.git\")",
+      "PowerShell($headers = @{ Authorization = \"token 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\" }; $response = Invoke-RestMethod -Uri \"https://api.github.com/user\" -Headers $headers; Write-Host \"Login: $\\($response.login\\)\"; Write-Host \"Name: $\\($response.name\\)\")",
+      "PowerShell($headers = @{ Authorization = \"token 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\" }; $repos = Invoke-RestMethod -Uri \"https://api.github.com/user/repos\" -Headers $headers; $repos | ForEach-Object { Write-Host $_.full_name })",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" remote set-url origin \"https://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@github.com/MsSubasinghe/CocoSence.git\")",
+      "Bash(vercel --version)",
+      "Bash(vercel whoami *)",
+      "Bash(vercel --token vcp_7ZBN10O6YLyrcGTahLQmi7xpN0Jv1FwopySbKhXYKS7BW0OjWD4S7lF8 --yes)",
+      "Bash(npm i *)",
+      "Bash(vercel --token vcp_7ZBN10O6YLyrcGTahLQmi7xpN0Jv1FwopySbKhXYKS7BW0OjWD4S7lF8 --yes --scope minols-team)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" push origin main)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" add client/src/pages/Documents.jsx client/public/certificates/)",
+      "Bash(npm install *)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" add client/src/pages/Documents.jsx client/src/components/PdfThumbnail.jsx client/package.json client/package-lock.json)",
+      "Bash(git -C \"c:\\\\Users\\\\USER\\\\Documents\\\\CocoSense\" add client/src/pages/Documents.jsx)"
     ]
   }
 }
