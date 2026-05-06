@@ -11,10 +11,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'All fields are required.' })
 
   try {
+    const apiKey = (process.env.RESEND_API_KEY || '').replace(/^﻿/, '').trim()
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
